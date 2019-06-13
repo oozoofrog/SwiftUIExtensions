@@ -5,11 +5,11 @@ public struct ViewConverter<Source: ViewConverterWrappable> {
 }
 
 public protocol ViewConverterWrappable {
-    var view: ViewConverter<Self> { get }
+    var swiftUI: ViewConverter<Self> { get }
 }
 
 public extension ViewConverterWrappable {
-    var view: ViewConverter<Self> { return ViewConverter(source: self) }
+    var swiftUI: ViewConverter<Self> { return ViewConverter(source: self) }
 }
 
 extension String: ViewConverterWrappable {}
