@@ -24,5 +24,6 @@ let package = Package(
         .testTarget(
             name: "SwiftUIExtensionsTests",
             dependencies: ["SwiftUIExtensions"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
