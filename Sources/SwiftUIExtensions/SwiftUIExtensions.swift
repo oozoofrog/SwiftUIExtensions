@@ -13,7 +13,7 @@ public extension ViewConverterWrappable {
 }
 
 extension String: ViewConverterWrappable {}
-@available(OSX 10.15, *)
+@available(OSX 10.15, iOS 13.0, *)
 public extension ViewConverter where Source: StringProtocol {
     var text: Text { return Text(self.source) }
 }
