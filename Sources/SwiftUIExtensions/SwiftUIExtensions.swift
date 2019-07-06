@@ -39,9 +39,14 @@ public typealias SourceColor = NSColor
 #endif
 @available(OSX 10.15, iOS 13.0, *)
 public extension Color {
-    static private func convert(_ handler: (UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?) -> Void) -> (Double, Double, Double, Double) {
+    #if os(iOS)
+    typealias Handler = (UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?) -> Bool
+    #else
+    typealias Handler = (UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?, UnsafeMutablePointer<CGFloat>?) -> Void
+    #endif
+    static private func convert(_ handler: Handler) -> (Double, Double, Double, Double) {
         var hsba: (CGFloat, CGFloat, CGFloat, CGFloat) = (0.0, 0.0, 0.0, 0.0)
-        handler(&hsba.0, &hsba.1, &hsba.2, &hsba.3)
+        _ = handler(&hsba.0, &hsba.1, &hsba.2, &hsba.3)
         return (Double(hsba.0), saturation: Double(hsba.1), brightness: Double(hsba.2), alpha: Double(hsba.3))
     }
     static func color(from color: SourceColor) -> Color {
